@@ -184,11 +184,15 @@
 
     .scurry-bug {
       position: fixed;
+      top: 0;
+      left: 0;
       z-index: 9999;
       pointer-events: none;
       will-change: transform;
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
       user-select: none;
+      margin: 0;
+      line-height: 0;
     }
 
     .scurry-bug img {
@@ -913,6 +917,7 @@
         const el = document.createElement('div');
         el.className = 'scurry-bug';
         el.style.width = size + 'px';
+        el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
         el.setAttribute('aria-hidden', 'true');
         const img = document.createElement('img');
         img.src = 'logo.png';
@@ -927,8 +932,8 @@
           size,
           x,
           y,
-          tx: randomBetween(40, vw - size - 40),
-          ty: randomBetween(40, vh - size - 40),
+          tx: randomBetween(40, Math.max(40, vw - size - 40)),
+          ty: randomBetween(40, Math.max(40, vh - size - 40)),
           speed,
           angle: 0,
           retargetIn: randomBetween(0.4, 1.4),
@@ -1021,12 +1026,17 @@
 
     // Initialize everything
     function initialize() {
-      initializeTailwind();
-      initNavbar();
-      initMobileMenu();
-      initTestimonials();
-      initKeyboardHandlers();
-      initScrollAnimations();
+      try {
+        initializeTailwind();
+        initNavbar();
+        initMobileMenu();
+        initTestimonials();
+        initKeyboardHandlers();
+        initScrollAnimations();
+      } catch (err) {
+        console.warn('[Feature Rich Software] Partial init failure:', err);
+      }
+      // Always wire the easter egg even if other init steps fail
       initFeatureOrBugEasterEgg();
       
       // Easter egg: press "a" to scroll to top
@@ -1039,10 +1049,15 @@
       console.log('%c[Feature Rich Software] Landing page initialized. Ready for customization.', 'color:#52525b;font-size:9px');
     }
 
-    // Boot
-    window.onload = initialize;
+    // Boot (safe if script runs after load, e.g. cached page)
+    if (document.readyState === 'complete') {
+      initialize();
+    } else {
+      window.addEventListener('load', initialize);
+    }
     
     window.scrollToContact = scrollToContact;
+    window.spawnScurryBugs = spawnScurryBugs;
   </script>
 </body>
 </html>
