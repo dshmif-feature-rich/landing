@@ -92,14 +92,6 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .work-card {
-      transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
-    }
-
-    .work-card:hover {
-      transform: translateY(-6px);
-    }
-
     .gradient-text {
       background: linear-gradient(135deg, #6366f1 0%, #67e8f9 100%);
       -webkit-background-clip: text;
@@ -203,22 +195,29 @@
         </a>
 
         <!-- Desktop Nav -->
-        <div class="hidden md:flex items-center gap-x-8 sm:gap-x-10 ml-4 sm:ml-6 md:ml-8 text-base sm:text-lg md:text-xl font-medium">
+        <div class="hidden md:flex items-center gap-x-8 sm:gap-x-10 ml-4 sm:ml-6 md:ml-8 mr-[15%] text-base sm:text-lg md:text-xl font-medium">
+          <a href="#beliefs" class="text-zinc-700 hover:text-zinc-950 transition-colors">Belief</a>
           <a href="#capabilities" class="text-zinc-700 hover:text-zinc-950 transition-colors">Capabilities</a>
           <a href="#process" class="text-zinc-700 hover:text-zinc-950 transition-colors">Process</a>
-          <a href="#work" class="text-zinc-700 hover:text-zinc-950 transition-colors">Work</a>
-          <a href="#stack" class="text-zinc-700 hover:text-zinc-950 transition-colors">Stack</a>
-        </div>
-
-        <div class="hidden md:flex items-center gap-x-4">
-          <button onclick="scrollToContact()" 
-                  class="px-6 py-3 text-base sm:text-lg font-medium text-zinc-700 hover:text-zinc-950 transition-colors">
-            Talk to us
-          </button>
-          <button onclick="scrollToContact()"
-                  class="px-8 py-3 bg-white hover:bg-zinc-100 active:bg-zinc-200 transition-all text-zinc-950 text-base sm:text-lg font-semibold rounded-3xl flex items-center gap-x-2 shadow-lg shadow-white/10">
-            <span>Start a project</span>
-          </button>
+          <div class="relative group">
+            <button type="button"
+                    class="inline-flex items-center gap-x-1.5 text-zinc-700 hover:text-zinc-950 transition-colors"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+              Products
+              <i class="fa-solid fa-chevron-down text-xs opacity-70 transition-transform group-hover:rotate-180 group-focus-within:rotate-180"></i>
+            </button>
+            <div class="absolute left-0 top-full pt-3 opacity-0 invisible pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:visible group-focus-within:pointer-events-auto transition-all duration-150 z-50">
+              <div class="min-w-[11rem] rounded-2xl border border-white/20 bg-white shadow-xl shadow-black/10 py-2">
+                <a href="https://www.comiccoin.app"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="block px-4 py-2.5 text-base text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 transition-colors">
+                  Comic Coin
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Mobile Menu Button -->
@@ -231,20 +230,28 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden border-t border-[#67e8f9]/30 bg-gradient-to-br from-[#6366f1]/70 to-[#67e8f9]/90 backdrop-blur-xl">
       <div class="pl-[20px] pr-5 py-6 flex flex-col gap-y-2 text-lg font-medium">
+        <a href="#beliefs" class="mobile-nav-link block py-2.5 px-1 text-zinc-700 hover:text-zinc-950">Belief</a>
         <a href="#capabilities" class="mobile-nav-link block py-2.5 px-1 text-zinc-700 hover:text-zinc-950">Capabilities</a>
         <a href="#process" class="mobile-nav-link block py-2.5 px-1 text-zinc-700 hover:text-zinc-950">Process</a>
-        <a href="#work" class="mobile-nav-link block py-2.5 px-1 text-zinc-700 hover:text-zinc-950">Work</a>
-        <a href="#stack" class="mobile-nav-link block py-2.5 px-1 text-zinc-700 hover:text-zinc-950">Stack</a>
-        <div class="pt-3 border-t border-[#67e8f9]/30 flex flex-col gap-y-2.5">
-          <button onclick="scrollToContact(); closeMobileMenu();" 
-                  class="w-full py-4 text-center text-zinc-700 border border-zinc-400/40 rounded-3xl text-lg font-medium hover:bg-white/60 transition-colors">
-            Talk to us
+        <div>
+          <button type="button"
+                  id="mobile-products-btn"
+                  class="w-full flex items-center justify-between py-2.5 px-1 text-zinc-700 hover:text-zinc-950"
+                  aria-expanded="false"
+                  aria-controls="mobile-products-menu">
+            <span>Products</span>
+            <i id="mobile-products-chevron" class="fa-solid fa-chevron-down text-xs opacity-70 transition-transform"></i>
           </button>
-          <button onclick="scrollToContact(); closeMobileMenu();"
-                  class="w-full py-4 text-center bg-white text-zinc-950 font-semibold rounded-3xl text-lg">
-            Start a project
-          </button>
+          <div id="mobile-products-menu" class="hidden pl-3 pb-1">
+            <a href="https://www.comiccoin.app"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="mobile-nav-link block py-2 px-1 text-zinc-700 hover:text-zinc-950">
+              Comic Coin
+            </a>
+          </div>
         </div>
+
       </div>
     </div>
   </nav>
@@ -270,26 +277,11 @@
           </p>
 
           <div class="flex flex-col sm:flex-row gap-4">
-            <button onclick="scrollToContact()" 
-                    class="group inline-flex items-center justify-center gap-x-3 bg-white hover:bg-zinc-100 active:bg-zinc-200 transition-all px-9 py-4 rounded-3xl text-zinc-950 font-semibold text-base shadow-xl shadow-indigo-500/10">
+            <a href="mailto:hello@featurerich.io"
+               class="group inline-flex items-center justify-center gap-x-3 bg-white hover:bg-zinc-100 active:bg-zinc-200 transition-all px-9 py-4 rounded-3xl text-zinc-950 font-semibold text-base shadow-xl shadow-indigo-500/10">
               <span>Start a conversation</span>
               <i class="fa-solid fa-arrow-right transition-transform group-active:translate-x-1"></i>
-            </button>
-            <button onclick="document.getElementById('work').scrollIntoView({ behavior: 'smooth' })" 
-                    class="inline-flex items-center justify-center gap-x-2 px-8 py-4 text-base font-semibold rounded-3xl border border-white/20 hover:bg-white/5 transition-all">
-              <span>Explore our work</span>
-            </button>
-          </div>
-
-          <div class="mt-8 flex items-center gap-x-8 text-sm">
-            <div class="flex -space-x-2">
-              <div class="w-7 h-7 rounded-full ring-2 ring-zinc-950 border border-white/20 bg-gradient-to-br from-indigo-400 to-violet-500 flex items-center justify-center text-[9px] font-semibold text-white">MC</div>
-              <div class="w-7 h-7 rounded-full ring-2 ring-zinc-950 border border-white/20 bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-[9px] font-semibold text-white">DR</div>
-              <div class="w-7 h-7 rounded-full ring-2 ring-zinc-950 border border-white/20 bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-[9px] font-semibold text-white">PP</div>
-            </div>
-            <div class="text-zinc-500">
-              <span class="text-emerald-400 font-medium">40+</span> teams launched
-            </div>
+            </a>
           </div>
         </div>
 
@@ -369,19 +361,45 @@
   <!-- TRUST BAR -->
   <div class="border-y border-white/10 bg-zinc-900/50 py-5">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-60">
-        <div class="font-semibold tracking-[2px] text-xs text-zinc-400">TRUSTED BY TEAMS AT</div>
-        <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-sm font-medium text-zinc-300">
-          <div>Stripe</div>
-          <div>Notion</div>
-          <div>Linear</div>
-          <div>Vercel</div>
-          <div>Supabase</div>
-          <div class="hidden sm:block">Ramp</div>
-        </div>
+      <div class="flex items-center justify-center opacity-60">
+        <div class="font-semibold tracking-wide text-sm text-zinc-400 text-center">Trusted by teams that want reliable delivery at AI speed</div>
       </div>
     </div>
   </div>
+
+  <!-- BELIEFS -->
+  <section id="beliefs" class="section max-w-7xl mx-auto px-5 sm:px-6 pt-12 sm:pt-16 md:pt-20 pb-12 sm:pb-16">
+    <div class="flex flex-col items-center text-center mb-12">
+      <div class="uppercase tracking-[3px] text-xs font-semibold text-indigo-400 mb-3">What we believe</div>
+      <h2 class="section-header font-display font-semibold tracking-tighter">Delivery builds trust.<br>Trust is everything.</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="service-card group p-7 bg-zinc-900 border border-white/10 hover:border-indigo-500/40 rounded-3xl">
+        <div class="w-11 h-11 rounded-2xl bg-indigo-500/10 flex items-center justify-center mb-6">
+          <i class="fa-solid fa-leaf text-indigo-400 text-2xl"></i>
+        </div>
+        <h3 class="font-semibold text-2xl tracking-tight mb-2">Simple over complex</h3>
+        <p class="text-zinc-400 text-[15px] leading-relaxed">Complexity is a tax on every decision that follows. We choose the simplest design that solves the real problem — fewer moving parts, clearer ownership, easier change.</p>
+      </div>
+
+      <div class="service-card group p-7 bg-zinc-900 border border-white/10 hover:border-indigo-500/40 rounded-3xl">
+        <div class="w-11 h-11 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-6">
+          <i class="fa-solid fa-bullseye text-cyan-400 text-2xl"></i>
+        </div>
+        <h3 class="font-semibold text-2xl tracking-tight mb-2">Small systems, done well</h3>
+        <p class="text-zinc-400 text-[15px] leading-relaxed">A focused system that does its job excellently beats a sprawling one that does everything poorly. We build for depth of reliability, not breadth of ambition.</p>
+      </div>
+
+      <div class="service-card group p-7 bg-zinc-900 border border-white/10 hover:border-indigo-500/40 rounded-3xl">
+        <div class="w-11 h-11 rounded-2xl bg-violet-500/10 flex items-center justify-center mb-6">
+          <i class="fa-solid fa-people-group text-violet-400 text-2xl"></i>
+        </div>
+        <h3 class="font-semibold text-2xl tracking-tight mb-2">Great people build great software</h3>
+        <p class="text-zinc-400 text-[15px] leading-relaxed">Great software comes from great teams — and great teams are built with great people. We hire for judgment, craft, and care, then give them room to deliver.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- CAPABILITIES -->
   <section id="capabilities" class="section max-w-7xl mx-auto px-5 sm:px-6 pt-12 sm:pt-16 md:pt-20 pb-12 sm:pb-16">
@@ -538,148 +556,8 @@
     </div>
   </section>
 
-  <!-- SELECTED WORK -->
-  <section id="work" class="section max-w-7xl mx-auto px-5 sm:px-6 pt-12 sm:pt-16 md:pt-20 pb-12 sm:pb-16">
-    <div class="flex items-end justify-between mb-10">
-      <div>
-        <div class="uppercase tracking-[3px] text-xs font-semibold text-violet-400 mb-2">Selected work</div>
-        <h2 class="font-display font-semibold tracking-tighter text-4xl md:text-[42px]">Outcomes that speak louder than words.</h2>
-      </div>
-      <a href="#" class="hidden md:flex items-center gap-x-2 text-sm font-medium text-zinc-300 hover:text-white group">
-        View all case studies <i class="fa-solid fa-arrow-up-right-from-square ml-1.5 transition group-hover:translate-x-0.5"></i>
-      </a>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-6">
-      <!-- Case 1 -->
-      <div onclick="showCaseModal(0)" class="work-card cursor-pointer bg-zinc-900 border border-white/10 hover:border-white/30 rounded-3xl p-6 flex flex-col group">
-        <div class="flex justify-between items-start mb-6">
-          <div>
-            <div class="text-emerald-400 text-xs font-semibold tracking-wider">FINTECH • 2024</div>
-            <div class="font-semibold text-2xl tracking-tight mt-1">Pinnacle</div>
-            <div class="text-sm text-zinc-400">Institutional trading platform</div>
-          </div>
-          <div class="text-right">
-            <div class="text-4xl font-semibold tabular-nums tracking-tighter">14×</div>
-            <div class="text-xs text-zinc-500 -mt-1">throughput</div>
-          </div>
-        </div>
-        <div class="mt-auto pt-6 border-t border-white/10 flex items-center justify-between">
-          <div class="text-xs text-zinc-400">Go • Kubernetes • ClickHouse • Next.js</div>
-          <div class="text-indigo-400 group-hover:translate-x-1 transition-transform">
-            <i class="fa-solid fa-arrow-right"></i>
-          </div>
-        </div>
-      </div>
-
-      <!-- Case 2 -->
-      <div onclick="showCaseModal(1)" class="work-card cursor-pointer bg-zinc-900 border border-white/10 hover:border-white/30 rounded-3xl p-6 flex flex-col group">
-        <div class="flex justify-between items-start mb-6">
-          <div>
-            <div class="text-emerald-400 text-xs font-semibold tracking-wider">HEALTH • 2024</div>
-            <div class="font-semibold text-2xl tracking-tight mt-1">Vita</div>
-            <div class="text-sm text-zinc-400">HIPAA-compliant care platform</div>
-          </div>
-          <div class="text-right">
-            <div class="text-4xl font-semibold tabular-nums tracking-tighter">0</div>
-            <div class="text-xs text-zinc-500 -mt-1">incidents</div>
-          </div>
-        </div>
-        <div class="mt-auto pt-6 border-t border-white/10 flex items-center justify-between">
-          <div class="text-xs text-zinc-400">AWS • Terraform • Rust • React</div>
-          <div class="text-indigo-400 group-hover:translate-x-1 transition-transform">
-            <i class="fa-solid fa-arrow-right"></i>
-          </div>
-        </div>
-      </div>
-
-      <!-- Case 3 -->
-      <div onclick="showCaseModal(2)" class="work-card cursor-pointer bg-zinc-900 border border-white/10 hover:border-white/30 rounded-3xl p-6 flex flex-col group">
-        <div class="flex justify-between items-start mb-6">
-          <div>
-            <div class="text-emerald-400 text-xs font-semibold tracking-wider">LOGISTICS • 2023</div>
-            <div class="font-semibold text-2xl tracking-tight mt-1">Atlas</div>
-            <div class="text-sm text-zinc-400">Global fleet intelligence</div>
-          </div>
-          <div class="text-right">
-            <div class="text-4xl font-semibold tabular-nums tracking-tighter">92%</div>
-            <div class="text-xs text-zinc-500 -mt-1">cost reduction</div>
-          </div>
-        </div>
-        <div class="mt-auto pt-6 border-t border-white/10 flex items-center justify-between">
-          <div class="text-xs text-zinc-400">GCP • Pulumi • Python • WebSockets</div>
-          <div class="text-indigo-400 group-hover:translate-x-1 transition-transform">
-            <i class="fa-solid fa-arrow-right"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="md:hidden mt-6">
-      <a href="#" class="flex items-center justify-center gap-x-2 text-sm font-medium text-zinc-300">View all case studies <i class="fa-solid fa-arrow-up-right-from-square ml-1.5"></i></a>
-    </div>
-  </section>
-
-  <!-- TECH STACK -->
-  <section id="stack" class="section max-w-7xl mx-auto px-5 sm:px-6 pb-12 sm:pb-16 md:pb-20">
-    <div class="text-center mb-9">
-      <div class="uppercase tracking-[3px] text-xs font-semibold text-sky-400 mb-3">Production-proven</div>
-      <h2 class="font-display font-semibold tracking-tighter text-4xl">The tools we trust at scale</h2>
-    </div>
-
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-      <div class="tech-pill flex items-center gap-x-3 bg-zinc-900 border border-white/10 hover:border-white/20 rounded-3xl px-5 py-[17px]">
-        <i class="fa-brands fa-aws text-orange-400 w-5"></i>
-        <div class="font-medium text-sm">AWS</div>
-      </div>
-      <div class="tech-pill flex items-center gap-x-3 bg-zinc-900 border border-white/10 hover:border-white/20 rounded-3xl px-5 py-[17px]">
-        <i class="fa-brands fa-google text-blue-400 w-5"></i>
-        <div class="font-medium text-sm">Google Cloud</div>
-      </div>
-      <div class="tech-pill flex items-center gap-x-3 bg-zinc-900 border border-white/10 hover:border-white/20 rounded-3xl px-5 py-[17px]">
-        <i class="fa-brands fa-microsoft text-sky-400 w-5"></i>
-        <div class="font-medium text-sm">Azure</div>
-      </div>
-      <div class="tech-pill flex items-center gap-x-3 bg-zinc-900 border border-white/10 hover:border-white/20 rounded-3xl px-5 py-[17px]">
-        <i class="fa-solid fa-layer-group text-emerald-400 w-5"></i>
-        <div class="font-medium text-sm">Kubernetes</div>
-      </div>
-      <div class="tech-pill flex items-center gap-x-3 bg-zinc-900 border border-white/10 hover:border-white/20 rounded-3xl px-5 py-[17px]">
-        <div class="font-bold text-emerald-400 w-5 text-center">TF</div>
-        <div class="font-medium text-sm">Terraform</div>
-      </div>
-      <div class="tech-pill flex items-center gap-x-3 bg-zinc-900 border border-white/10 hover:border-white/20 rounded-3xl px-5 py-[17px]">
-        <i class="fa-solid fa-code text-violet-400 w-5"></i>
-        <div class="font-medium text-sm">TypeScript</div>
-      </div>
-      <div class="tech-pill flex items-center gap-x-3 bg-zinc-900 border border-white/10 hover:border-white/20 rounded-3xl px-5 py-[17px]">
-        <i class="fa-solid fa-globe text-indigo-400 w-5"></i>
-        <div class="font-medium text-sm">Next.js</div>
-      </div>
-      <div class="tech-pill flex items-center gap-x-3 bg-zinc-900 border border-white/10 hover:border-white/20 rounded-3xl px-5 py-[17px]">
-        <div class="font-bold text-cyan-400 w-5 text-center">Go</div>
-        <div class="font-medium text-sm">Golang</div>
-      </div>
-      <div class="tech-pill flex items-center gap-x-3 bg-zinc-900 border border-white/10 hover:border-white/20 rounded-3xl px-5 py-[17px]">
-        <i class="fa-solid fa-database text-amber-400 w-5"></i>
-        <div class="font-medium text-sm">PostgreSQL</div>
-      </div>
-      <div class="tech-pill flex items-center gap-x-3 bg-zinc-900 border border-white/10 hover:border-white/20 rounded-3xl px-5 py-[17px]">
-        <i class="fa-solid fa-project-diagram text-rose-400 w-5"></i>
-        <div class="font-medium text-sm">GraphQL</div>
-      </div>
-      <div class="tech-pill flex items-center gap-x-3 bg-zinc-900 border border-white/10 hover:border-white/20 rounded-3xl px-5 py-[17px]">
-        <i class="fa-solid fa-sync text-teal-400 w-5"></i>
-        <div class="font-medium text-sm">ArgoCD</div>
-      </div>
-      <div class="tech-pill flex items-center gap-x-3 bg-zinc-900 border border-white/10 hover:border-white/20 rounded-3xl px-5 py-[17px]">
-        <i class="fa-solid fa-chart-line text-lime-400 w-5"></i>
-        <div class="font-medium text-sm">Grafana + Prometheus</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TESTIMONIALS -->
+  <!--
+  TESTIMONIALS / From our partners (commented out)
   <section class="bg-zinc-900 border-y border-white/10 py-12 sm:py-16">
     <div class="max-w-5xl mx-auto px-6">
       <div class="text-center mb-10">
@@ -688,7 +566,6 @@
       </div>
 
       <div class="relative max-w-3xl mx-auto">
-        <!-- Testimonials -->
         <div id="testimonial-0" class="testimonial">
           <div class="bg-zinc-950 border border-white/10 rounded-3xl p-9 md:p-11">
             <div class="flex gap-x-1 text-amber-400 mb-6">
@@ -743,7 +620,6 @@
           </div>
         </div>
 
-        <!-- Testimonial Controls -->
         <div class="flex items-center justify-between mt-6 px-1">
           <div class="flex gap-x-2">
             <button onclick="showTestimonial(0)" class="testimonial-dot w-2.5 h-2.5 rounded-full bg-white transition-all" data-index="0"></button>
@@ -759,6 +635,7 @@
       </div>
     </div>
   </section>
+  -->
 
   <!-- ENGAGEMENT MODELS -->
   <section class="max-w-7xl mx-auto px-5 sm:px-6 pt-12 sm:pt-16 md:pt-20 pb-10 sm:pb-14">
@@ -819,109 +696,17 @@
     </div>
   </section>
 
-  <!-- CONTACT / FOOTER -->
-  <footer id="contact" class="bg-black border-t border-white/10 pt-12 sm:pt-16 pb-8 sm:pb-9">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-x-14 gap-y-14">
-        <!-- Contact Form -->
-        <div>
-          <h3 class="font-display font-semibold tracking-tighter text-3xl mb-3">Let’s start the conversation</h3>
-          <p class="text-zinc-400 mb-8">Tell us about your project or challenge. We’ll get back to you quickly with thoughts and next steps.</p>
-          
-          <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs tracking-wider text-zinc-500 mb-1.5 font-medium">YOUR NAME</label>
-                <input required type="text" name="name" class="w-full bg-zinc-900 border border-white/15 focus:border-indigo-500/60 rounded-2xl px-5 py-3 text-sm placeholder:text-zinc-500 outline-none transition-all" placeholder="Alex Rivera">
-              </div>
-              <div>
-                <label class="block text-xs tracking-wider text-zinc-500 mb-1.5 font-medium">WORK EMAIL</label>
-                <input required type="email" name="email" class="w-full bg-zinc-900 border border-white/15 focus:border-indigo-500/60 rounded-2xl px-5 py-3 text-sm placeholder:text-zinc-500 outline-none transition-all" placeholder="alex@company.com">
-              </div>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs tracking-wider text-zinc-500 mb-1.5 font-medium">COMPANY</label>
-                <input type="text" name="company" class="w-full bg-zinc-900 border border-white/15 focus:border-indigo-500/60 rounded-2xl px-5 py-3 text-sm placeholder:text-zinc-500 outline-none transition-all" placeholder="Acme Corp">
-              </div>
-              <div>
-                <label class="block text-xs tracking-wider text-zinc-500 mb-1.5 font-medium">BUDGET RANGE</label>
-                <select name="budget" class="w-full bg-zinc-900 border border-white/15 focus:border-indigo-500/60 rounded-2xl px-5 py-3 text-sm text-white outline-none transition-all">
-                  <option value="">Select range...</option>
-                  <option value="50-150k">$50k – $150k</option>
-                  <option value="150-400k">$150k – $400k</option>
-                  <option value="400k+">$400k+</option>
-                  <option value="retainer">Retainer / ongoing</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-xs tracking-wider text-zinc-500 mb-1.5 font-medium">WHAT ARE YOU WORKING ON?</label>
-              <textarea required name="message" rows="4" class="w-full resize-y bg-zinc-900 border border-white/15 focus:border-indigo-500/60 rounded-3xl px-5 py-3.5 text-sm placeholder:text-zinc-500 outline-none transition-all" placeholder="We're rebuilding our core trading platform and need help with both the frontend experience and the real-time data infrastructure..."></textarea>
-            </div>
-
-            <button type="submit" 
-                    class="w-full flex justify-center items-center gap-x-2 py-4 bg-white text-zinc-950 font-semibold rounded-3xl hover:bg-zinc-100 active:bg-zinc-200 transition-all text-sm">
-              <span id="submit-btn-text">Send message</span>
-              <i id="submit-icon" class="fa-solid fa-paper-plane ml-1"></i>
-            </button>
-            
-            <p class="text-center text-xs text-zinc-500 pt-1">We typically reply within one business day.</p>
-          </form>
-        </div>
-
-        <!-- Contact Info -->
-        <div class="md:pl-5 pt-2">
-          <div class="space-y-9">
-            <div>
-              <div class="uppercase text-xs font-semibold tracking-[2px] text-zinc-500 mb-3">HEADQUARTERS</div>
-              <div class="text-lg leading-tight">San Francisco, CA<br>
-              <span class="text-zinc-500">Remote-first with hubs in NYC, London &amp; Singapore</span></div>
-            </div>
-            
-            <div>
-              <div class="uppercase text-xs font-semibold tracking-[2px] text-zinc-500 mb-3">DIRECT</div>
-              <a href="mailto:hello@featurerich.dev" class="text-2xl font-medium tracking-tight hover:text-indigo-400 transition-colors">hello@featurerich.dev</a>
-            </div>
-            
-            <div>
-              <div class="uppercase text-xs font-semibold tracking-[2px] text-zinc-500 mb-3">FOLLOW OUR WORK</div>
-              <div class="flex gap-x-6 text-2xl">
-                <a href="#" class="text-zinc-400 hover:text-white transition-colors"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="#" class="text-zinc-400 hover:text-white transition-colors"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="#" class="text-zinc-400 hover:text-white transition-colors"><i class="fa-brands fa-github"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row gap-y-3 items-center justify-between text-xs text-zinc-500">
-        <div>© 2025 Feature Rich Software, Inc. All rights reserved.</div>
-        <div class="flex gap-x-6">
-          <a href="#" class="hover:text-zinc-300 transition-colors">Privacy</a>
-          <a href="#" class="hover:text-zinc-300 transition-colors">Legal</a>
-          <a href="#" class="hover:text-zinc-300 transition-colors">Status</a>
-        </div>
-      </div>
+  <!-- FOOTER -->
+  <footer class="bg-black border-t border-white/10 py-8 sm:py-9">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row gap-y-3 items-center justify-between text-xs text-zinc-500">
+      <div>© 2026 K2D2 Collective LLC DBA Feature Rich Software. All rights reserved.</div>
+      <!-- <div class="flex gap-x-6">
+        <a href="#" class="hover:text-zinc-300 transition-colors">Privacy</a>
+        <a href="#" class="hover:text-zinc-300 transition-colors">Legal</a>
+        <a href="#" class="hover:text-zinc-300 transition-colors">Status</a>
+      </div> -->
     </div>
   </footer>
-
-  <!-- Case Study Modals -->
-  <div id="case-modal" onclick="if (event.target.id === 'case-modal') hideCaseModal()" class="hidden fixed inset-0 bg-black/90 backdrop-blur-sm z-[70] flex items-center justify-center p-4">
-    <div onclick="event.stopImmediatePropagation()" class="bg-zinc-950 border border-white/10 rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-auto">
-      <!-- Modal content populated by JS -->
-      <div id="modal-content"></div>
-    </div>
-  </div>
-
-  <!-- Success Toast -->
-  <div id="success-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-500 text-white px-7 py-3 rounded-3xl flex items-center gap-x-3 shadow-2xl text-sm font-medium z-[80]">
-    <i class="fa-solid fa-check-circle"></i>
-    <span>Thanks! We'll be in touch within 24 hours.</span>
-  </div>
 
   <script>
     // Tailwind Play CDN configuration
@@ -946,6 +731,9 @@
     function initMobileMenu() {
       const btn = document.getElementById('mobile-menu-btn');
       const menu = document.getElementById('mobile-menu');
+      const productsBtn = document.getElementById('mobile-products-btn');
+      const productsMenu = document.getElementById('mobile-products-menu');
+      const productsChevron = document.getElementById('mobile-products-chevron');
       
       btn.addEventListener('click', () => {
         if (menu.classList.contains('hidden')) {
@@ -955,6 +743,17 @@
           closeMobileMenu();
         }
       });
+
+      if (productsBtn && productsMenu) {
+        productsBtn.addEventListener('click', () => {
+          const isOpen = !productsMenu.classList.contains('hidden');
+          productsMenu.classList.toggle('hidden', isOpen);
+          productsBtn.setAttribute('aria-expanded', String(!isOpen));
+          if (productsChevron) {
+            productsChevron.classList.toggle('rotate-180', !isOpen);
+          }
+        });
+      }
 
       // Close on link click
       document.querySelectorAll('.mobile-nav-link').forEach(link => {
@@ -967,13 +766,18 @@
     function closeMobileMenu() {
       const menu = document.getElementById('mobile-menu');
       const btn = document.getElementById('mobile-menu-btn');
+      const productsMenu = document.getElementById('mobile-products-menu');
+      const productsBtn = document.getElementById('mobile-products-btn');
+      const productsChevron = document.getElementById('mobile-products-chevron');
       menu.classList.add('hidden');
       btn.innerHTML = '<i class="fa-solid fa-bars text-xl"></i>';
+      if (productsMenu) productsMenu.classList.add('hidden');
+      if (productsBtn) productsBtn.setAttribute('aria-expanded', 'false');
+      if (productsChevron) productsChevron.classList.remove('rotate-180');
     }
 
-    // Smooth scroll helper
     function scrollToContact() {
-      document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.location.href = 'mailto:hello@featurerich.io';
     }
 
     // Testimonials
@@ -1026,186 +830,13 @@
       }, 7000);
     }
 
-    // Case study data
-    const caseStudies = [
-      {
-        client: "Pinnacle Capital",
-        industry: "Fintech",
-        year: "2024",
-        title: "Institutional-grade trading platform",
-        challenge: "Pinnacle's legacy trading system couldn't handle modern order volumes and suffered from high latency. They needed a complete rebuild with sub-millisecond response times and full regulatory compliance.",
-        solution: "We designed and delivered a new platform using Go for the matching engine, ClickHouse for market data, Next.js for trader UI, and a fully managed Kubernetes stack on AWS. Real-time risk and compliance checks were built directly into the order flow.",
-        results: [
-          { label: "Order throughput increase", value: "14×" },
-          { label: "Latency reduction", value: "97%" },
-          { label: "Time to first trade", value: "4 months" }
-        ],
-        tech: ["Go", "Kubernetes (EKS)", "ClickHouse", "Next.js", "Terraform", "AWS"],
-        impact: "Pinnacle now processes over 2.1M orders daily with 99.99% uptime. They expanded into two new asset classes in the first quarter after launch."
-      },
-      {
-        client: "Vita Health",
-        industry: "Healthcare",
-        year: "2024",
-        title: "HIPAA-compliant patient care platform",
-        challenge: "Vita needed to launch a digital-first care platform with strict HIPAA requirements, while integrating with 40+ EHR systems and maintaining auditability for every data interaction.",
-        solution: "Built on a secure, multi-tenant architecture using Rust services behind a GraphQL gateway. Full infrastructure-as-code with HIPAA-eligible AWS services, automated compliance evidence collection, and end-to-end encryption at rest and in transit.",
-        results: [
-          { label: "Security incidents", value: "0" },
-          { label: "EHR integrations", value: "43" },
-          { label: "Time to SOC2 Type II", value: "7 months" }
-        ],
-        tech: ["Rust", "AWS", "Terraform", "React", "PostgreSQL", "Vault"],
-        impact: "Vita launched on time and raised a $42M Series B. The platform now serves 180,000 active patients across 11 states."
-      },
-      {
-        client: "Atlas Logistics",
-        industry: "Logistics",
-        year: "2023",
-        title: "Global fleet intelligence platform",
-        challenge: "Atlas operated 6,000+ trucks across 14 countries with fragmented data systems. They needed predictive maintenance, real-time ETAs, and cost visibility without a massive engineering team.",
-        solution: "A modern event-driven platform on Google Cloud using Pub/Sub, Cloud Run, and BigQuery. We built digital twins of every vehicle, predictive models for maintenance, and a beautiful operations dashboard.",
-        results: [
-          { label: "Operational cost reduction", value: "92%" },
-          { label: "Prediction accuracy", value: "89%" },
-          { label: "Fleet utilization lift", value: "+31%" }
-        ],
-        tech: ["GCP", "Pulumi", "Python", "BigQuery", "React", "WebSockets"],
-        impact: "Atlas reduced unplanned downtime by 78% and was able to double their fleet size without increasing operations headcount."
-      }
-    ];
-
-    function showCaseModal(index) {
-      const study = caseStudies[index];
-      const modal = document.getElementById('case-modal');
-      const content = document.getElementById('modal-content');
-      
-      content.innerHTML = `
-        <div class="p-8 md:p-10">
-          <!-- Header -->
-          <div class="flex justify-between items-start mb-7">
-            <div>
-              <div class="text-xs font-semibold tracking-widest text-emerald-400">${study.industry} • ${study.year}</div>
-              <div class="font-display text-4xl font-semibold tracking-tighter mt-1">${study.client}</div>
-              <div class="text-xl text-zinc-400">${study.title}</div>
-            </div>
-            <button onclick="hideCaseModal()" class="w-10 h-10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 rounded-2xl transition-all -mr-2">
-              <i class="fa-solid fa-times text-xl"></i>
-            </button>
-          </div>
-
-          <div class="grid md:grid-cols-5 gap-8">
-            <!-- Left column -->
-            <div class="md:col-span-3 space-y-8">
-              <div>
-                <div class="uppercase text-xs font-semibold tracking-wider text-zinc-500 mb-2">THE CHALLENGE</div>
-                <p class="text-lg leading-tight">${study.challenge}</p>
-              </div>
-              <div>
-                <div class="uppercase text-xs font-semibold tracking-wider text-zinc-500 mb-2">WHAT WE BUILT</div>
-                <p class="text-lg leading-tight">${study.solution}</p>
-              </div>
-            </div>
-
-            <!-- Sidebar -->
-            <div class="md:col-span-2">
-              <div class="bg-zinc-900 border border-white/10 rounded-3xl p-6">
-                <div class="uppercase text-xs font-semibold tracking-wider text-emerald-400 mb-4">KEY OUTCOMES</div>
-                <div class="space-y-5">
-                  ${study.results.map(r => `
-                    <div>
-                      <div class="text-4xl font-semibold tabular-nums tracking-tighter">${r.value}</div>
-                      <div class="text-sm text-zinc-400">${r.label}</div>
-                    </div>
-                  `).join('')}
-                </div>
-              </div>
-
-              <div class="mt-6">
-                <div class="uppercase text-xs font-semibold tracking-wider text-zinc-500 mb-3">TECHNOLOGY</div>
-                <div class="flex flex-wrap gap-2">
-                  ${study.tech.map(t => `<div class="px-3.5 py-1 text-xs bg-white/5 rounded-2xl border border-white/10">${t}</div>`).join('')}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-8 pt-6 border-t border-white/10">
-            <div class="text-sm font-medium mb-2">BUSINESS IMPACT</div>
-            <p class="text-zinc-400">${study.impact}</p>
-          </div>
-        </div>
-      `;
-      
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function hideCaseModal() {
-      const modal = document.getElementById('case-modal');
-      modal.classList.remove('flex');
-      modal.classList.add('hidden');
-      document.body.style.overflow = '';
-    }
-
-    // Form handling
-    async function handleFormSubmit(e) {
-      e.preventDefault();
-      
-      const form = e.target;
-      const btnText = document.getElementById('submit-btn-text');
-      const icon = document.getElementById('submit-icon');
-      
-      // Loading state
-      const originalText = btnText.textContent;
-      btnText.textContent = 'Sending...';
-      icon.classList.remove('fa-paper-plane');
-      icon.classList.add('fa-spinner', 'fa-spin');
-      
-      // Simulate network delay
-      await new Promise(resolve => setTimeout(resolve, 850));
-      
-      // Success UI
-      form.reset();
-      btnText.textContent = 'Message sent';
-      icon.classList.remove('fa-spinner', 'fa-spin');
-      icon.classList.add('fa-check');
-      
-      // Show toast
-      const toast = document.getElementById('success-toast');
-      toast.classList.remove('hidden');
-      toast.classList.add('flex');
-      
-      // Reset button after 2.5s
-      setTimeout(() => {
-        btnText.textContent = originalText;
-        icon.classList.remove('fa-check');
-        icon.classList.add('fa-paper-plane');
-        
-        // Hide toast
-        toast.classList.remove('flex');
-        toast.classList.add('hidden');
-      }, 2600);
-    }
-
-    // Keyboard escape for modal
     function initKeyboardHandlers() {
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          const modal = document.getElementById('case-modal');
-          if (!modal.classList.contains('hidden')) {
-            hideCaseModal();
-          }
-        }
-        
         if (e.key === '/' && document.activeElement.tagName === 'BODY') {
           e.preventDefault();
-          document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+          scrollToContact();
         }
       });
-      
-      // Add subtle live region for accessibility
     }
 
     // IntersectionObserver for nice fade-ins
@@ -1219,7 +850,7 @@
         });
       }, { threshold: 0.12 });
       
-      document.querySelectorAll('.service-card, .work-card, .process-step').forEach(el => {
+      document.querySelectorAll('.service-card, .process-step').forEach(el => {
         el.style.opacity = '0.96';
         observer.observe(el);
       });
@@ -1248,8 +879,6 @@
     // Boot
     window.onload = initialize;
     
-    // Make key functions globally available if needed
-    window.showCaseModal = showCaseModal;
     window.scrollToContact = scrollToContact;
   </script>
 </body>
