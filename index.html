@@ -181,6 +181,27 @@
     .section {
       scroll-margin-top: 80px;
     }
+
+    .scurry-bug {
+      position: fixed;
+      z-index: 9999;
+      pointer-events: none;
+      will-change: transform;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
+      user-select: none;
+    }
+
+    .scurry-bug img {
+      display: block;
+      width: 100%;
+      height: auto;
+      animation: scurry-wiggle 0.18s ease-in-out infinite alternate;
+    }
+
+    @keyframes scurry-wiggle {
+      from { transform: rotate(-6deg) scale(1.02, 0.98); }
+      to { transform: rotate(6deg) scale(0.98, 1.02); }
+    }
   </style>
 </head>
 <body class="bg-zinc-950 text-zinc-200">
@@ -701,7 +722,7 @@
     <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row gap-y-3 items-center justify-between text-xs text-zinc-500">
       <div>© 2026 K2D2 Collective LLC DBA Feature Rich Software. All rights reserved.</div>
       <div class="flex gap-x-6">
-        <div>Is it a feature or is it a bug?</div>
+        <a href="#" id="feature-or-bug-link" class="hover:text-zinc-300 transition-colors">Is it a feature or is it a bug?</a>
         <!-- <a href="#" class="hover:text-zinc-300 transition-colors">Privacy</a>
         <a href="#" class="hover:text-zinc-300 transition-colors">Legal</a>
         <a href="#" class="hover:text-zinc-300 transition-colors">Status</a> -->
@@ -857,6 +878,147 @@
       });
     }
 
+    // Easter egg: logo bugs scurry across the page
+    const scurryBugs = [];
+    let scurryRaf = null;
+    let scurryLastTs = 0;
+
+    function randomBetween(min, max) {
+      return min + Math.random() * (max - min);
+    }
+
+    function spawnScurryBugs(count = 10) {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const edges = ['top', 'bottom', 'left', 'right'];
+
+      for (let i = 0; i < count; i++) {
+        const size = Math.round(randomBetween(28, 78));
+        const edge = edges[Math.floor(Math.random() * edges.length)];
+        let x, y;
+        if (edge === 'top') {
+          x = randomBetween(0, vw - size);
+          y = -size - randomBetween(0, 40);
+        } else if (edge === 'bottom') {
+          x = randomBetween(0, vw - size);
+          y = vh + randomBetween(0, 40);
+        } else if (edge === 'left') {
+          x = -size - randomBetween(0, 40);
+          y = randomBetween(0, vh - size);
+        } else {
+          x = vw + randomBetween(0, 40);
+          y = randomBetween(0, vh - size);
+        }
+
+        const el = document.createElement('div');
+        el.className = 'scurry-bug';
+        el.style.width = size + 'px';
+        el.setAttribute('aria-hidden', 'true');
+        const img = document.createElement('img');
+        img.src = 'logo.png';
+        img.alt = '';
+        img.draggable = false;
+        el.appendChild(img);
+        document.body.appendChild(el);
+
+        const speed = randomBetween(140, 320) * (size < 45 ? 1.15 : size > 65 ? 0.75 : 1);
+        scurryBugs.push({
+          el,
+          size,
+          x,
+          y,
+          tx: randomBetween(40, vw - size - 40),
+          ty: randomBetween(40, vh - size - 40),
+          speed,
+          angle: 0,
+          retargetIn: randomBetween(0.4, 1.4),
+          life: randomBetween(7, 12),
+          leaving: false,
+        });
+      }
+
+      if (!scurryRaf) {
+        scurryLastTs = 0;
+        scurryRaf = requestAnimationFrame(tickScurryBugs);
+      }
+    }
+
+    function tickScurryBugs(ts) {
+      if (!scurryLastTs) scurryLastTs = ts;
+      const dt = Math.min(0.05, (ts - scurryLastTs) / 1000);
+      scurryLastTs = ts;
+
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      for (let i = scurryBugs.length - 1; i >= 0; i--) {
+        const b = scurryBugs[i];
+        b.life -= dt;
+        b.retargetIn -= dt;
+
+        if (!b.leaving && b.life <= 0) {
+          b.leaving = true;
+          const side = Math.floor(Math.random() * 4);
+          if (side === 0) { b.tx = randomBetween(0, vw); b.ty = -b.size - 80; }
+          else if (side === 1) { b.tx = randomBetween(0, vw); b.ty = vh + 80; }
+          else if (side === 2) { b.tx = -b.size - 80; b.ty = randomBetween(0, vh); }
+          else { b.tx = vw + 80; b.ty = randomBetween(0, vh); }
+          b.speed *= 1.35;
+        }
+
+        if (!b.leaving && b.retargetIn <= 0) {
+          b.tx = randomBetween(24, Math.max(24, vw - b.size - 24));
+          b.ty = randomBetween(24, Math.max(24, vh - b.size - 24));
+          b.retargetIn = randomBetween(0.35, 1.6);
+          // Occasional quick dart
+          if (Math.random() < 0.25) b.speed = randomBetween(220, 400);
+          else b.speed = randomBetween(130, 280) * (b.size < 45 ? 1.15 : b.size > 65 ? 0.75 : 1);
+        }
+
+        const dx = b.tx - b.x;
+        const dy = b.ty - b.y;
+        const dist = Math.hypot(dx, dy) || 1;
+        const step = b.speed * dt;
+
+        if (dist <= step) {
+          b.x = b.tx;
+          b.y = b.ty;
+          if (b.leaving) {
+            b.el.remove();
+            scurryBugs.splice(i, 1);
+            continue;
+          }
+        } else {
+          b.x += (dx / dist) * step;
+          b.y += (dy / dist) * step;
+          // Logo faces up; rotate so "head" leads the crawl
+          b.angle = (Math.atan2(dy, dx) * 180) / Math.PI + 90;
+        }
+
+        const wobble = Math.sin(ts / 70 + i) * 4;
+        b.el.style.transform = `translate3d(${b.x}px, ${b.y}px, 0) rotate(${b.angle + wobble}deg)`;
+      }
+
+      if (scurryBugs.length > 0) {
+        scurryRaf = requestAnimationFrame(tickScurryBugs);
+      } else {
+        scurryRaf = null;
+        scurryLastTs = 0;
+      }
+    }
+
+    function initFeatureOrBugEasterEgg() {
+      const link = document.getElementById('feature-or-bug-link');
+      if (!link) return;
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Cap total concurrent bugs so rapid clicks stay fun, not catastrophic
+        const room = Math.max(0, 36 - scurryBugs.length);
+        if (room === 0) return;
+        spawnScurryBugs(Math.min(room, Math.round(randomBetween(8, 14))));
+      });
+    }
+
     // Initialize everything
     function initialize() {
       initializeTailwind();
@@ -865,6 +1027,7 @@
       initTestimonials();
       initKeyboardHandlers();
       initScrollAnimations();
+      initFeatureOrBugEasterEgg();
       
       // Easter egg: press "a" to scroll to top
       document.addEventListener('keypress', (e) => {
@@ -873,7 +1036,6 @@
         }
       });
       
-      // Preload avatars (already using external, but nice to know)
       console.log('%c[Feature Rich Software] Landing page initialized. Ready for customization.', 'color:#52525b;font-size:9px');
     }
 
